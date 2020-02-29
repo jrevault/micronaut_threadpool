@@ -29,16 +29,6 @@ public class SyncEndpoint {
       return HttpResponse.ok( service.get( id ) );
   }
 
-
-  @Post("/")
-  @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-  @Produces(MediaType.APPLICATION_JSON)
-  public MutableHttpResponse<Object> create( String title) throws Exception {
-    service.create( title );
-    return HttpResponse.ok();
-
-  }
-
   @Error(global = true)
   public HttpResponse<JsonError> error( HttpRequest request, Exception exception) {
     JsonError error = new JsonError("Error occured: " + exception.getMessage())

@@ -14,16 +14,6 @@ public class SyncService {
     this.dao = dao;
   }
 
-  public void create(String title) throws Exception {
-    try {
-      dao.create(title);
-    }
-    catch ( SQLException e ) {
-      e.printStackTrace();
-      throw new Exception( "Could not insert book with title " + title, e );
-    }
-  }
-
   public Book get( long id) throws Exception {
     try {
       Book book = new Book();

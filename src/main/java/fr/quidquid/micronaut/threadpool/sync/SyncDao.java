@@ -31,12 +31,4 @@ public class SyncDao {
     }
   }
 
-  public void create( String title ) throws SQLException {
-    String sql = "insert into books (title) values ('" + title + "')";
-
-    try ( Connection con = dataSource.getConnection( ) ;
-          PreparedStatement ps = con.prepareStatement( sql ) ; ) {
-      ps.execute( sql );
-    }
-  }
 }
