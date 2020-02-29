@@ -1,0 +1,5 @@
+profile: service
+defaultPackage: micronaut.threadpool
+---
+testFramework: junit
+sourceLanguage: java
