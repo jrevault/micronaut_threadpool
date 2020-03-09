@@ -1,3 +1,5 @@
+@see https://stackoverflow.com/posts/60466550
+
 If I understand correctly Netty has 3 types of threads : **Boss**, **Worker**, and **Application Executor**.
 
 When an incoming connexion (a request) reaches Netty, the boss thread (managed by ServerSocketChannel) gives it to a worker thread (managed by NioServerSocketChannelFactory) that performs in a non-blocking mode.
@@ -73,19 +75,27 @@ Configure :
         server:
             thread-selection: MANUAL
 
-And then use @NonBlocking or @Async without Schedulers, but then we have to return a CompletionStage or its derivative... Any example ?
+And then use @NonBlocking or @Async without Schedulers, but then we have to return a CompletionStage or its derivative :
 
       @Get( "/{id}" )
       @Async( "IO" )
       @Produces( MediaType.APPLICATION_JSON )
-      return CompletionStage
-        ???
+      public CompletableFuture<Book> get( long id ) {
+
+        return CompletableFuture.supplyAsync( () -> {
+          try {
+            return service.get( id );
+          }
+          catch ( SQLException e ) {
+            throw new RuntimeException( e );
+          }
+        } );
       }
 
 
+Are these different approach the correct way to go ?
 
-
-Bonus question, do you have some best practices to hide/simplify the reactive code, and error management ?
+Bonus question, do you have some best practices for envelopes and error management ?
 
 
 Thanks,
